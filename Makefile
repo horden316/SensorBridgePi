@@ -4,6 +4,9 @@ CC = gcc
 #-I 到指定目錄找header
 CFLAGS = -Wall -Iinclude -g
 
+# 連結選項（加入 libgpiod 函式庫）
+LDFLAGS = -lgpiod
+
 # 設定目錄
 SRC_DIR = src
 OBJ_DIR = obj
@@ -22,7 +25,7 @@ all: $(TARGET)
 
 # 連結物件檔案成最終執行檔
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $@
+	$(CC) $(OBJS) $(LDFLAGS) -o $@
 
 # 規則：編譯 .c 檔案到 .o 檔案
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
