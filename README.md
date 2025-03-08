@@ -14,7 +14,8 @@ project_root/
 │   └── config.h          
 ├── src/                  # Implementation code
 │   ├── hal.c             # Hardware abstraction layer implementation
-│   ├── sensor_temp.c     # Temperature/humidity sensor driver
+│   ├── sensor_dht11.c    # Temperature/humidity sensor driver
+│   ├── sensor_sht31.c    # Temperature sensor driver
 │   ├── sensor_pir.c      # PIR sensor driver implementation
 │   ├── mqtt.c            # MQTT communication module
 │   ├── data_proc.c       # Data processing and formatting
