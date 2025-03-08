@@ -3,7 +3,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "hal.h"
 
 // Sensor types
 typedef enum {
