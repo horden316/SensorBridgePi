@@ -8,7 +8,7 @@ struct gpiod_chip* hal_get_gpio_controller(int chip_num){
 
     struct gpiod_chip *chip = NULL;
 
-    else if (chip_num == 0) {
+    if (chip_num == 0) {
         chip = gpiod_chip_open("/dev/gpiochip0");
     }
 
