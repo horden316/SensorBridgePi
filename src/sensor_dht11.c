@@ -42,6 +42,7 @@ int get_dht11_data(int PIN) {
     };
 
     if (timeout >= TIMEOUT)
+        printf("DHT!! might be not connected\n");
         return 2;
     else
         timeout = 0;
