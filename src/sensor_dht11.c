@@ -1,8 +1,4 @@
-#include "sensor.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
+#include "sensor_dht11.h"
 int get_dht11_data(struct gpiod_line *line) {
     unsigned char state = 1;
     unsigned char counter = 0;
