@@ -1,8 +1,24 @@
 #include "hal.h"
 struct gpiod_chip* hal_get_gpio_controller(int chip_num){
-    char chip_name[20];
-    snprintf(chip_name, sizeof(chip_name), "/dev/gpiochip%d", chip_num);
-    struct gpiod_chip *chip = gpiod_chip_open(chip_name);
+    
+    if (chip_num < 0) {
+        fprintf(stderr, "Invalid chip number\n");
+        exit(EXIT_FAILURE);
+    }
+
+    else if (chip_num == 0) {
+        struct gpiod_chip *chip = gpiod_chip_open("gpiochip0");
+    }
+
+    else if (chip_num == 1) {
+        struct gpiod_chip *chip = gpiod_chip_open("gpiochip1");
+    }
+
+    else {
+        fprintf(stderr, "Invalid chip number\n");
+        exit(EXIT_FAILURE);
+    }
+    
 
     if (!chip) {
         perror("Open chip failed");
