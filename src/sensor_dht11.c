@@ -41,11 +41,14 @@ int get_dht11_data(int PIN) {
         delayMicroseconds(1);
     };
 
-    if (timeout >= TIMEOUT)
+    if (timeout >= TIMEOUT){
         printf("DHT!! might be not connected\n");
         return 2;
-    else
+    }
+    else{
         timeout = 0;
+    }
+        
 
     // Read data
     for (int i = 0; i < 5; i++) //read 40 bits data
