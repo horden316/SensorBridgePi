@@ -42,7 +42,7 @@ int get_dht11_data(int PIN) {
     };
 
     if (timeout >= TIMEOUT)
-        return 1;
+        return 2;
     else
         timeout = 0;
 
@@ -81,7 +81,7 @@ int get_dht11_data(int PIN) {
     }
     else
     {
-        return 1;
+        return 3;
     }
 
 
