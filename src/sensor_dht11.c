@@ -76,8 +76,8 @@ int get_dht11_data(int PIN) {
     checksum = data[0] + data[1] + data[2] + data[3];
     if (checksum == data[4])
     {
-        humidity_data = data[0];
-        temp_data = data[2];
+        humidity = data[0];
+        temperature = data[2];
     }
     else
     {
