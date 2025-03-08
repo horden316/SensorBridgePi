@@ -1,5 +1,5 @@
 #include "sensor_dht11.h"
-#define TIMEOUT 200
+#define TIMEOUT 400
 
 int get_dht11_data(struct gpiod_line *line) {
     unsigned char state = 1;
@@ -16,6 +16,8 @@ int get_dht11_data(struct gpiod_line *line) {
     if (gpiod_line_request_output(line, "dht11", 1) < 0) {
         return -1;
     }
+
+    usleep(2000);  // 2ms delay
     
     // Start signal
     gpiod_line_set_value(line, 0);
@@ -38,7 +40,7 @@ int get_dht11_data(struct gpiod_line *line) {
     }
     if (timeout >= TIMEOUT) return -2;
     
-    // Wait for DHT11 to pull the line low with timeout
+    // Wait for DHT11 to pull the line high with timeout
     timeout = 0;
     while (state == 0 && timeout < TIMEOUT) {
         state = gpiod_line_get_value(line);
@@ -47,7 +49,7 @@ int get_dht11_data(struct gpiod_line *line) {
     }
     if (timeout >= TIMEOUT) return -3;
     
-    // Wait for DHT11 to pull the line high with timeout
+    // Wait for DHT11 to pull the line low with timeout
     timeout = 0;
     while (state == 1 && timeout < TIMEOUT) {
         state = gpiod_line_get_value(line);
@@ -56,10 +58,10 @@ int get_dht11_data(struct gpiod_line *line) {
     }
     if (timeout >= TIMEOUT) return -4;
     
-    // Read data 
+    // Read data - 5 bytes
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 8; j++) {
-            // Wait for DHT11 to pull the line low
+            // Wait for DHT11 to pull the line high
             timeout = 0;
             while (state == 0 && timeout < TIMEOUT) {
                 state = gpiod_line_get_value(line);
@@ -68,25 +70,21 @@ int get_dht11_data(struct gpiod_line *line) {
             }
             if (timeout >= TIMEOUT) return -5;
             
-            // Wait for DHT11 to pull the line high and count duration
+            // Wait for DHT11 to pull the line low and count duration
             counter = 0;
             timeout = 0;
             while (state == 1 && timeout < TIMEOUT) {
                 state = gpiod_line_get_value(line);
                 counter++;
-                if (counter > TIMEOUT) {
-                    return -6;
-                }
                 usleep(1);
                 timeout++;
             }
             if (timeout >= TIMEOUT) return -7;
             
             data[i] <<= 1;
-            if (counter > 28) {  // Adjusted threshold for bit determination
+            if (counter > 28) { 
                 data[i] |= 1;
             }
-            counter = 0;
         }
     }
     
