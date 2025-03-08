@@ -6,12 +6,14 @@ struct gpiod_chip* hal_get_gpio_controller(int chip_num){
         exit(EXIT_FAILURE);
     }
 
+    struct gpiod_chip *chip = NULL;
+
     else if (chip_num == 0) {
-        struct gpiod_chip *chip = gpiod_chip_open("gpiochip0");
+        chip = gpiod_chip_open("/dev/gpiochip0");
     }
 
     else if (chip_num == 1) {
-        struct gpiod_chip *chip = gpiod_chip_open("gpiochip1");
+        chip = gpiod_chip_open("/dev/gpiochip1");
     }
 
     else {
