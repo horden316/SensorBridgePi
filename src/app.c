@@ -17,5 +17,9 @@ int main(void) {
 
     printf("DHT11 return data: %d\n", get_dht11_data(gpio_line));
 
+    // 釋放 line 資源
+    gpiod_line_release(gpio_line);
+    gpiod_chip_close(chip);
+
     return 0;
 }
