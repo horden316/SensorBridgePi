@@ -2,7 +2,7 @@
 #include <gpiod.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sensor_dht11.h>
+#include "sensor_dht11.h"
 #define TEMPERATURE_HUMIDITY_PIN 73
 
 int main(void) {
