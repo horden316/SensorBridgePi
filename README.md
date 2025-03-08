@@ -6,14 +6,12 @@ A modular C-based project for collecting data from various sensors on Orange Pi 
 ```
 project_root/
 ├── include/              # Public headers (API definitions)
-│   ├── hal.h             # Hardware abstraction layer interface
 │   ├── sensor.h          # Sensor interface definitions
 │   ├── mqtt.h            # MQTT communication interface
 │   ├── app.h             # Application layer interface
 │   ├── utils.h           # Utilities and logging interface
 │   └── config.h          
 ├── src/                  # Implementation code
-│   ├── hal.c             # Hardware abstraction layer implementation
 │   ├── sensor_dht11.c    # Temperature/humidity sensor driver
 │   ├── sensor_sht31.c    # Temperature sensor driver
 │   ├── sensor_pir.c      # PIR sensor driver implementation

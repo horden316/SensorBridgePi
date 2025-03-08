@@ -4,8 +4,8 @@ CC = gcc
 #-I 到指定目錄找header
 CFLAGS = -Wall -Iinclude -g
 
-# 連結選項（加入 libgpiod 函式庫）
-LDFLAGS = -lgpiod
+# 連結選項（加入 wiringOP 函式庫）
+LDFLAGS = -lwiringPi -lwiringPiDev -lpthread -lm -lcrypt -lrt
 
 # 設定目錄
 SRC_DIR = src

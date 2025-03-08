@@ -1,106 +1,95 @@
 #include "sensor_dht11.h"
-#define TIMEOUT 400
+#define TIMEOUT 100
 
-int get_dht11_data(struct gpiod_line *line) {
+int get_dht11_data(int PIN) {
     unsigned char state = 1;
     unsigned char counter = 0;
     unsigned char data[5] = {0,0,0,0,0};
     unsigned char checksum;
-    unsigned char temp;
+    unsigned char temperature;
     unsigned char humidity;
-    unsigned char temp_data;
-    unsigned char humidity_data;
+    
     int timeout = 0;
-    
-    // Configure line as output for start signal
-    if (gpiod_line_request_output(line, "dht11", 1) < 0) {
-        return -1;
-    }
 
-    usleep(2000);  // 2ms delay
-    
+
     // Start signal
-    gpiod_line_set_value(line, 0);
-    usleep(18000);  // 18ms low
-    gpiod_line_set_value(line, 1);
-    usleep(40);     // 40us high
-    
-    // Release and reconfigure as input
-    gpiod_line_release(line);
-    if (gpiod_line_request_input(line, "dht11") < 0) {
-        return -1;
-    }
-    
-    // Wait for DHT11 response with timeout protection
-    timeout = 0;
-    while (state == 1 && timeout < TIMEOUT) {
-        state = gpiod_line_get_value(line);
-        usleep(1);
+    wiringPiSetup();
+    pinMode(PIN, OUTPUT);  //SET OUTPUT
+
+    digitalWrite(PIN, LOW);
+    delay(20);     //pull down at least 18ms
+    digitalWrite(PIN, HIGH);
+    delayMicroseconds(35);   //host pull up 20~40us
+
+
+    // DHT11 response
+    pinMode(PIN, INPUT);    //SET INPUT
+    while (digitalRead(PIN) && timeout < TIMEOUT) //DHT11 will pull down ~80us
+    {
         timeout++;
-    }
-    if (timeout >= TIMEOUT) return -2;
+        delayMicroseconds(1);
+    };
+
+    if (timeout >= TIMEOUT)
+        return 1;
+    else
+        timeout = 0;
     
-    // Wait for DHT11 to pull the line high with timeout
-    timeout = 0;
-    while (state == 0 && timeout < TIMEOUT) {
-        state = gpiod_line_get_value(line);
-        usleep(1);
+    while (!digitalRead(PIN) && timeout < TIMEOUT) //DHT11 pull down and then pull up ~80us
+    {
         timeout++;
-    }
-    if (timeout >= TIMEOUT) return -3;
-    
-    // Wait for DHT11 to pull the line low with timeout
-    timeout = 0;
-    while (state == 1 && timeout < TIMEOUT) {
-        state = gpiod_line_get_value(line);
-        usleep(1);
-        timeout++;
-    }
-    if (timeout >= TIMEOUT) return -4;
-    
-    // Read data - 5 bytes
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 8; j++) {
-            // Wait for DHT11 to pull the line high
+        delayMicroseconds(1);
+    };
+
+    if (timeout >= TIMEOUT)
+        return 1;
+    else
+        timeout = 0;
+
+    // Read data
+    for (int i = 0; i < 5; i++) //read 40 bits data
+    {
+        for (int j = 0; j < 8; j++) //read 8 bits data
+        {
             timeout = 0;
-            while (state == 0 && timeout < TIMEOUT) {
-                state = gpiod_line_get_value(line);
-                usleep(1);
+            while (digitalRead(PIN) && timeout < TIMEOUT) //wait for low level
+            {
                 timeout++;
+                delayMicroseconds(1);
             }
-            if (timeout >= TIMEOUT) return -5;
-            
-            // Wait for DHT11 to pull the line low and count duration
-            counter = 0;
             timeout = 0;
-            while (state == 1 && timeout < TIMEOUT) {
-                state = gpiod_line_get_value(line);
-                counter++;
-                usleep(1);
+            while (!digitalRead(PIN) && timeout < TIMEOUT) //wait for high level
+            {
                 timeout++;
+                delayMicroseconds(1);
             }
-            if (timeout >= TIMEOUT) return -7;
-            
-            data[i] <<= 1;
-            if (counter > 28) { 
-                data[i] |= 1;
-            }
+            delayMicroseconds(40); //wait for 40us
+            if (digitalRead(PIN))
+                state = 1;
+            else
+                state = 0;
+            data[i] = (data[i] << 1) | state;
         }
     }
-    
-    // Calculate checksum
+
+    // Checksum
     checksum = data[0] + data[1] + data[2] + data[3];
-    if (checksum != data[4]) {
-        return -8;  // Checksum failure
+    if (checksum == data[4])
+    {
+        humidity_data = data[0];
+        temp_data = data[2];
     }
-    
-    // Calculate temperature and humidity
-    humidity = data[0];
-    temp = data[2];
-    temp_data = data[3];
-    humidity_data = data[1];
-    printf("Humidity: %d.%d%%\n", humidity, humidity_data);
-    printf("Temperature: %d.%d°C\n", temp, temp_data);
+    else
+    {
+        return 1;
+    }
+
+
+
+    //Print data
+    printf("Humidity: %d%%\n", humidity);
+    printf("Temperature: %d°C\n", temperature);
+
     
     return 0;
 }
