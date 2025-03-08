@@ -33,3 +33,7 @@ sudo apt update
 sudo apt install libgpiod-dev
 ```
 
+Insatll gpiod command line tool
+```bash
+sudo apt install gpiod
+```
