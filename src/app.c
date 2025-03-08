@@ -11,6 +11,8 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
+    printf("DHT11 return data: %d\n", get_dht11_data(TEMPERATURE_HUMIDITY_PIN));
+
 
     return 0;
 }
