@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "sensor_dht11.h"
 #define TEMPERATURE_HUMIDITY_PIN 2
-#define TRY_TIMES 3
+#define TRY_TIMES 5
 
 int main(void) {
     if (wiringPiSetup() == -1)
@@ -20,6 +20,7 @@ int main(void) {
         {
             break;
         }
+        printf("Failed to get data, retry %d\n", i + 1);
     }
 
 
