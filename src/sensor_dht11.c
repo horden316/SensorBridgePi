@@ -32,11 +32,13 @@ sensor_result get_dht11_data(int PIN) {
         delayMicroseconds(1);
     };
 
-    if (timeout >= TIMEOUT)
+    if (timeout >= TIMEOUT){
         result.get_status = 1;
         return result;
-    else
+    }
+    else{
         timeout = 0;
+    }
     
     while (!digitalRead(PIN) && timeout < TIMEOUT) //DHT11 pull down and then pull up ~80us
     {
