@@ -21,7 +21,7 @@ int main(void) {
             exit(EXIT_FAILURE);
         }
 
-        sensor_result result = 0;
+        sensor_result result;
         for (int i = 0; i < TRY_TIMES; i++){
             result = get_dht11_data(TEMPERATURE_HUMIDITY_PIN);
         if (result.get_status == 0) {
@@ -29,9 +29,9 @@ int main(void) {
             humidity = result.value.temphum.humidity;
             printf("Temperature: %.2f°C, Humidity: %.2f%%\n", temperature, humidity);
             char payload[50];
-            sprintf(payload, 10, "%.2f", temperature);
+            snprintf(payload, 10, "%.2f", temperature);
             mqtt_publish("home/bedroom/temperature", payload);
-            sprintf(payload, 10, "%.2f", humidity);
+            snprintf(payload, 10, "%.2f", humidity);
             mqtt_publish("home/bedroom/humidity", payload);
             break;
         }
