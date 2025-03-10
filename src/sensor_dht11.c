@@ -33,7 +33,7 @@ sensor_result get_dht11_data(int PIN) {
     };
 
     if (timeout >= TIMEOUT)
-        result.get_status = 1
+        result.get_status = 1;
         return result;
     else
         timeout = 0;
