@@ -2,4 +2,4 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <wiringPi.h>
-int get_dht11_data(int PIN);
+sensor_result get_dht11_data(int PIN);
