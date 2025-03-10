@@ -3,7 +3,6 @@
 
 sensor_result get_dht11_data(int PIN) {
     unsigned char state = 1;
-    unsigned char counter = 0;
     unsigned char data[5] = {0,0,0,0,0};
     unsigned char checksum;
     unsigned char temperature;
