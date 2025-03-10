@@ -33,7 +33,8 @@ sensor_result get_dht11_data(int PIN) {
     };
 
     if (timeout >= TIMEOUT)
-        return 1;
+        result.get_status = 1
+        return result;
     else
         timeout = 0;
     
@@ -45,7 +46,8 @@ sensor_result get_dht11_data(int PIN) {
 
     if (timeout >= TIMEOUT){
         printf("DHT!! might be not connected\n");
-        return 2;
+        result.get_status = 2;
+        return result;
     }
     else{
         timeout = 0;
@@ -87,7 +89,9 @@ sensor_result get_dht11_data(int PIN) {
     }
     else
     {
-        return 3;
+        printf("Checksum error\n");
+        result.get_status = 3;
+        return result;
     }
 
     result.type = SENSOR_TYPE_TEMPERATURE_HUMIDITY;
@@ -100,6 +104,5 @@ sensor_result get_dht11_data(int PIN) {
     printf("Humidity: %d%%\n", humidity);
     printf("Temperature: %d°C\n", temperature);
 
-    
-    return 0;
+    return result;
 }
