@@ -48,7 +48,7 @@ void mqtt_publish(const char* topic, const char* payload) {
         return;
     }
     MQTTClient_waitForCompletion(client, token, TIMEOUT);
-    printf("已發佈訊息：%s 到 topic：%s\n", payload, topic);
+    //printf("已發佈訊息：%s 到 topic：%s\n", payload, topic);
 }
 
 void mqtt_disconnect(void) {

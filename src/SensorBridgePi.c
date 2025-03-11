@@ -7,6 +7,7 @@
 #include "mqtt_connection.h"
 #define TEMPERATURE_HUMIDITY_PIN 2
 #define TRY_TIMES 3
+#define MQTT_TRY_TIMES 5
 
 void* sensor_thread_func(void* arg) {
     while (1) {
@@ -41,9 +42,12 @@ void* mqtt_thread_func(void* arg) {
 
 int main(void) {
 
-    if (mqtt_connect() != 0) {
-        printf("Failed to connect to MQTT broker\n");
-        exit(EXIT_FAILURE);
+    while (MQTT_TRY_TIMES--) {
+        if (mqtt_connect() == 0) {
+            break;
+        }
+        printf("Failed to connect to MQTT broker, retry %d\n", MQTT_TRY_TIMES);
+        sleep(60);
     }
     
     pthread_t sensor_thread, mqtt_thread;
