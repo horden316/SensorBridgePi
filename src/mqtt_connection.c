@@ -1,20 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "MQTTClient.h"
 #include "mqtt_connection.h"
-
 #define ADDRESS  "tcp://localhost:1883"
 #define CLIENTID "ModularClient"
 #define QOS      1
 #define TIMEOUT  10000L
-#define USERNAME "admin"
-#define PASSWORD "password"
 
 // 宣告一個全域的 MQTTClient 變數
 static MQTTClient client;
 
 int mqtt_connect(void) {
+    Config config;
+    if (read_config(".config", &config) != 0) {
+        printf("讀取設定檔失敗\n");
+        return -1;
+    }
     MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
     int rc;
 
@@ -25,8 +23,8 @@ int mqtt_connect(void) {
     }
     conn_opts.keepAliveInterval = 20;
     conn_opts.cleansession = 1;
-    conn_opts.username = USERNAME;
-    conn_opts.password = PASSWORD;
+    conn_opts.username = config.username;
+    conn_opts.password = config.password;
     if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS) {
         printf("連線失敗，錯誤代碼：%d\n", rc);
         return rc;
