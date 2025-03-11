@@ -4,13 +4,13 @@ CC = gcc
 #-I 到指定目錄找header
 CFLAGS = -Wall -Iinclude -g
 
-# 連結選項（加入 wiringOP lgpiod 函式庫）
-LDFLAGS = -lwiringPi -lwiringPiDev -lpthread -lm -lcrypt -lrt -lgpiod
+# 連結選項（加入 wiringOP lgpiod mqtt同步 函式庫）
+LDFLAGS = -lwiringPi -lwiringPiDev -lpthread -lm -lcrypt -lrt -lgpiod -lpaho-mqtt3c -lcjson
 
 # 設定目錄
 SRC_DIR = src
 OBJ_DIR = obj
-TARGET  = app
+TARGET  = SensorBridgePi
 
 # 取得 src 目錄下所有 .c 檔案
 SRCS    := $(wildcard $(SRC_DIR)/*.c)

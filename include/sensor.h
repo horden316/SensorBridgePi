@@ -16,14 +16,15 @@ typedef enum {
 typedef struct {
     sensor_type type;
     union {
-        float temperature;      // In degrees Celsius
-        float humidity;         // In percentage
+        struct {
+            float temperature;      // In degrees Celsius
+            float humidity;         // In percentage
+        }temphum;
         bool motion_detected;   // Motion detection flag
         uint16_t light_level;   // Light level
-        // Add more reading types as needed
     } value;
     uint64_t timestamp;         // Reading timestamp
-    bool valid;
+    uint8_t get_status;         // Reading status
 } sensor_result;
 
 

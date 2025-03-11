@@ -1,15 +1,16 @@
 #include "sensor_dht11.h"
 #define TIMEOUT 100
 
-int get_dht11_data(int PIN) {
+sensor_result get_dht11_data(int PIN) {
     unsigned char state = 1;
-    unsigned char counter = 0;
     unsigned char data[5] = {0,0,0,0,0};
     unsigned char checksum;
     unsigned char temperature;
     unsigned char humidity;
     
     int timeout = 0;
+
+    sensor_result result;
 
 
     // Start signal
@@ -30,10 +31,13 @@ int get_dht11_data(int PIN) {
         delayMicroseconds(1);
     };
 
-    if (timeout >= TIMEOUT)
-        return 1;
-    else
+    if (timeout >= TIMEOUT){
+        result.get_status = 1;
+        return result;
+    }
+    else{
         timeout = 0;
+    }
     
     while (!digitalRead(PIN) && timeout < TIMEOUT) //DHT11 pull down and then pull up ~80us
     {
@@ -43,7 +47,8 @@ int get_dht11_data(int PIN) {
 
     if (timeout >= TIMEOUT){
         printf("DHT!! might be not connected\n");
-        return 2;
+        result.get_status = 2;
+        return result;
     }
     else{
         timeout = 0;
@@ -85,15 +90,20 @@ int get_dht11_data(int PIN) {
     }
     else
     {
-        return 3;
+        printf("Checksum error\n");
+        result.get_status = 3;
+        return result;
     }
 
-
+    result.type = SENSOR_TYPE_TEMPERATURE_HUMIDITY;
+    result.value.temphum.temperature = temperature;
+    result.value.temphum.humidity = humidity;
+    result.timestamp = time(NULL);
+    result.get_status = 0;
 
     //Print data
     printf("Humidity: %d%%\n", humidity);
     printf("Temperature: %d°C\n", temperature);
 
-    
-    return 0;
+    return result;
 }
