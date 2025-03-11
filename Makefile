@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Iinclude -g
 
 # 連結選項（加入 wiringOP lgpiod mqtt同步 函式庫）
-LDFLAGS = -lwiringPi -lwiringPiDev -lpthread -lm -lcrypt -lrt -lgpiod -lpaho-mqtt3c
+LDFLAGS = -lwiringPi -lwiringPiDev -lpthread -lm -lcrypt -lrt -lgpiod -lpaho-mqtt3c -lcjson
 
 # 設定目錄
 SRC_DIR = src

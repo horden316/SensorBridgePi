@@ -42,6 +42,11 @@ Insatll gpiod command line tool
 sudo apt install gpiod
 ```
 
+Install cJSON library
+```bash
+sudo apt install libcjson-dev
+```
+
 ## Build
 ```bash
 make
