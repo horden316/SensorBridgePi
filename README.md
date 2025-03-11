@@ -41,3 +41,18 @@ Insatll gpiod command line tool
 ```bash
 sudo apt install gpiod
 ```
+
+## Build
+```bash
+make
+```
+
+## Create configuration file
+add a file named `config.json` in the project root directory with the following content
+```
+{
+    "username": "admin",
+    "password": "mysecretpassword",
+    "broker_address": "tcp://localhost:1883"
+}
+```

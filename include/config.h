@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "cJSON.h"
 #define MAX_LINE_LENGTH 256
 typedef struct {
     char username[50];
