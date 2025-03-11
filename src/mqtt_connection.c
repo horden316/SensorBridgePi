@@ -9,7 +9,7 @@ static MQTTClient client;
 
 int mqtt_connect(void) {
     Config config;
-    if (read_config(".config", &config) != 0) {
+    if (read_config_json(".config", &config) != 0) {
         printf("讀取設定檔失敗\n");
         return -1;
     }
