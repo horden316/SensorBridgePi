@@ -42,7 +42,8 @@ void* mqtt_thread_func(void* arg) {
 
 int main(void) {
 
-    while (MQTT_TRY_TIMES--) {
+    u_int8_t mqtt_try_times = MQTT_TRY_TIMES;
+    while (mqtt_try_times--) {
         if (mqtt_connect() == 0) {
             break;
         }
