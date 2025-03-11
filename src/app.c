@@ -27,7 +27,7 @@ void* sensor_thread_func(void* arg) {
             printf("Failed to get data, retry %d\n", i + 1);
             usleep(500000);
         }
-        sleep(60); // 每60秒更新一次
+        sleep(20); // 每60秒更新一次
     }
 }
 
