@@ -10,7 +10,7 @@ LDFLAGS = -lwiringPi -lwiringPiDev -lpthread -lm -lcrypt -lrt -lgpiod -lpaho-mqt
 # 設定目錄
 SRC_DIR = src
 OBJ_DIR = obj
-TARGET  = app
+TARGET  = SensorBridgePi
 
 # 取得 src 目錄下所有 .c 檔案
 SRCS    := $(wildcard $(SRC_DIR)/*.c)
