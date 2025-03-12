@@ -102,8 +102,8 @@ sensor_result get_dht11_data(int PIN) {
     result.get_status = 0;
 
     //Print data
-    printf("Humidity: %d%%\n", humidity);
-    printf("Temperature: %d°C\n", temperature);
+    //printf("Humidity: %d%%\n", humidity);
+    //printf("Temperature: %d°C\n", temperature);
 
     return result;
 }
