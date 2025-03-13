@@ -47,6 +47,11 @@ Install cJSON library
 sudo apt install libcjson-dev
 ```
 
+Install i2c-tools library
+```bash
+sudo apt install i2c-tools
+```
+
 ## Build
 ```bash
 make

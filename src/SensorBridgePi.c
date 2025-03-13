@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sensor_dht11.h"
+#include "sensor_sht3x.h"
 #include "mqtt_connection.h"
 #define TEMPERATURE_HUMIDITY_PIN 2
 #define TRY_TIMES 3
@@ -14,7 +15,8 @@ void* sensor_thread_func(void* arg) {
         float temperature, humidity;
         sensor_result result;
         for (int i = 0; i < TRY_TIMES; i++) {
-            result = get_dht11_data(TEMPERATURE_HUMIDITY_PIN);
+            //result = get_dht11_data(TEMPERATURE_HUMIDITY_PIN);
+            result = get_sht3x_data("/dev/i2c-3", 0x44);
             if (result.get_status == 0) {
                 temperature = result.value.temphum.temperature;
                 humidity = result.value.temphum.humidity;
