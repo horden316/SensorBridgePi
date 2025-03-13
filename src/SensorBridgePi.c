@@ -16,7 +16,8 @@ void* sensor_thread_func(void* arg) {
         sensor_result result;
         for (int i = 0; i < TRY_TIMES; i++) {
             //result = get_dht11_data(TEMPERATURE_HUMIDITY_PIN);
-            result = get_sht3x_data("/dev/i2c-3", 0x44);
+            int addr = 0x44;
+            result = get_sht3x_data("/dev/i2c-3", addr);
             if (result.get_status == 0) {
                 temperature = result.value.temphum.temperature;
                 humidity = result.value.temphum.humidity;
