@@ -1,4 +1,4 @@
-ifdef __SENSOR_SHT3X_H__
+#ifdef __SENSOR_SHT3X_H__
 #define __SENSOR_SHT3X_H__
 #include <stdio.h>
 #include <stdlib.h>
