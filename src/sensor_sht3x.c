@@ -15,7 +15,7 @@ uint8_t crc8(const uint8_t *data, int len) {
     return crc;
 }
 
-int get_sht3x_data(char *i2c_device, int addr) {
+sensor_result get_sht3x_data(char *i2c_device, int addr) {
     int file;
 
     sensor_result result;
@@ -25,8 +25,7 @@ int get_sht3x_data(char *i2c_device, int addr) {
         perror("開啟 I2C 裝置失敗");
         exit(1);
     }
-    
-    int addr = 0x44; // SHT31 預設 I2C 位址 (如有需要可改為 0x45)
+
     if (ioctl(file, I2C_SLAVE, addr) < 0) {
         perror("設定 I2C 位址失敗");
         close(file);
