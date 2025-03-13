@@ -82,5 +82,5 @@ sensor_result get_sht3x_data(char *i2c_device, int addr) {
     result.get_status = 0;
     
     close(file);
-    return 0;
+    return result;
 }
