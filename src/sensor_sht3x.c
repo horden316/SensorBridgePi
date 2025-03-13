@@ -17,6 +17,8 @@ uint8_t crc8(const uint8_t *data, int len) {
 
 int get_sht3x_data(char *i2c_device, int addr) {
     int file;
+
+    sensor_result result;
     
     // 開啟 I2C 裝置
     if ((file = open(i2c_device, O_RDWR)) < 0) {
