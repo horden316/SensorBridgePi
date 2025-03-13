@@ -32,7 +32,7 @@ sensor_result get_sht3x_data(char *i2c_device, int addr) {
         exit(1);
     }
     
-    // 發送測量命令 (高重複性、無時鐘拉伸)
+    // 發送測量命令 (高精度模式)
     uint8_t cmd[2] = {0x24, 0x00};
     if (write(file, cmd, 2) != 2) {
         perror("寫入命令失敗");
@@ -73,8 +73,8 @@ sensor_result get_sht3x_data(char *i2c_device, int addr) {
     float temperature = -45 + 175 * ((float)tempRaw / 65535.0);
     float humidity    = 100 * ((float)humRaw / 65535.0);
     
-    printf("溫度: %.2f °C\n", temperature);
-    printf("濕度: %.2f %%\n", humidity);
+    //printf("溫度: %.2f °C\n", temperature);
+    //printf("濕度: %.2f %%\n", humidity);
     result.type = SENSOR_TYPE_TEMPERATURE_HUMIDITY;
     result.value.temphum.temperature = temperature;
     result.value.temphum.humidity = humidity;
