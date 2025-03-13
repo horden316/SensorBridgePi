@@ -8,6 +8,7 @@
 #include <linux/i2c-dev.h>
 #include <stdint.h>
 #include "sensor.h"
+#include <time.h>
 
 uint8_t crc8(const uint8_t *data, int len);
 sensor_result get_sht3x_data(char *i2c_device, int addr);
