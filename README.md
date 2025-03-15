@@ -58,7 +58,7 @@ make
 ```
 
 ## Create configuration file
-add a file named `sensor_bridge_pi.json` in the project root directory with the following content
+add a file named `config.json` in the project root directory with the following content
 ```
 {
     "username": "admin",

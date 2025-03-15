@@ -11,7 +11,8 @@
 #define TRY_TIMES 3
 #define MQTT_TRY_TIMES 5
 
-void* sensor_thread_func(void* arg, Config config) {
+void* sensor_thread_func(void* arg) {
+    Config config = *(Config*)arg;
     while (1) {
         float temperature, humidity;
         sensor_result result;
@@ -74,7 +75,7 @@ int main(void) {
     
     pthread_t sensor_thread, mqtt_thread;
 
-    if (pthread_create(&sensor_thread, NULL, sensor_thread_func, NULL) != 0) {
+    if (pthread_create(&sensor_thread, NULL, sensor_thread_func, &config) != 0) {
         perror("Cannot create sensor thread");
         exit(EXIT_FAILURE);
     }
