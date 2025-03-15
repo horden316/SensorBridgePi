@@ -7,8 +7,7 @@
 // 宣告一個全域的 MQTTClient 變數
 static MQTTClient client;
 
-int mqtt_connect(void) {
-    Config config;
+int mqtt_connect(Config config) {
     if (read_config_json("config.json", &config) != 0) {
         printf("讀取設定檔失敗\n");
         return -1;

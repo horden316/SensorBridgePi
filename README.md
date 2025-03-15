@@ -64,5 +64,7 @@ add a file named `config.json` in the project root directory with the following 
     "username": "admin",
     "password": "mysecretpassword",
     "broker_address": "tcp://localhost:1883"
+    "temperature_humidity_sensor": "SHT3x",
+    "humidity_compensation": 15
 }
 ```

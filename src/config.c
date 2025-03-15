@@ -37,6 +37,8 @@ int read_config_json(const char* filename, Config* config) {
     cJSON *username = cJSON_GetObjectItemCaseSensitive(json, "username");
     cJSON *password = cJSON_GetObjectItemCaseSensitive(json, "password");
     cJSON *broker_address = cJSON_GetObjectItemCaseSensitive(json, "broker_address");
+    cJSON *temperature_humidity_sensor = cJSON_GetObjectItemCaseSensitive(json, "temperature_humidity_sensor");
+    cJSON *humidity_compensation = cJSON_GetObjectItemCaseSensitive(json, "humidity_compensation");
 
     if (cJSON_IsString(username) && (username->valuestring != NULL)) {
         strncpy(config->username, username->valuestring, sizeof(config->username) - 1);
@@ -61,6 +63,23 @@ int read_config_json(const char* filename, Config* config) {
         config->broker_address[sizeof(config->broker_address) - 1] = '\0';
     } else {
         printf("無法取得 broker_address\n");
+        cJSON_Delete(json);
+        return -1;
+    }
+
+    if (cJSON_IsString(temperature_humidity_sensor) && (temperature_humidity_sensor->valuestring != NULL)) {
+        strncpy(config->temperature_humidity_sensor, temperature_humidity_sensor->valuestring, sizeof(config->broker_address) - 1);
+        config->temperature_humidity_sensor[sizeof(config->temperature_humidity_sensor) - 1] = '\0';
+    } else {
+        printf("無法取得 temperature_humidity_sensor\n");
+        cJSON_Delete(json);
+        return -1;
+    }
+
+    if (cJSON_IsNumber(humidity_compensation)) {
+        config->humidity_compensation = humidity_compensation->valueint;
+    } else {
+        printf("無法取得 humidity_compensation\n");
         cJSON_Delete(json);
         return -1;
     }

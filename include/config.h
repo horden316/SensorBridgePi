@@ -9,6 +9,8 @@ typedef struct {
     char username[50];
     char password[50];
     char broker_address[100];
+    char temperature_humidity_sensor[50];
+    int humidity_compensation;
 } Config;
 
 char* read_file(const char* filename);
