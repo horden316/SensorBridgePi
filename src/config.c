@@ -69,7 +69,7 @@ int read_config_json(const char* filename, Config* config) {
 
     if (cJSON_IsString(temperature_humidity_sensor) && (temperature_humidity_sensor->valuestring != NULL)) {
         strncpy(config->temperature_humidity_sensor, temperature_humidity_sensor->valuestring, sizeof(config->temperature_humidity_sensor) - 1);
-        config->temperature_humidity_sensor[sizeof(config->temperatrue_humidity_sensor) - 1] = '\0';
+        config->temperature_humidity_sensor[sizeof(config->temperature_humidity_sensor) - 1] = '\0';
     } else {
         printf("無法取得 temperature_humidity_sensor\n");
         cJSON_Delete(json);
