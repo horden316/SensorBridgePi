@@ -6,7 +6,7 @@
 #include <MQTTClient.h>
 #include "config.h"
 
-int mqtt_connect(void);
+int mqtt_connect(Config config);
 void mqtt_publish(const char* topic, const char* payload);
 void mqtt_disconnect(void);
 
