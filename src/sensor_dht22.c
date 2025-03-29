@@ -3,7 +3,7 @@
 
 sensor_result get_dht22_data(int PIN) {
     unsigned char state = 1;
-    unsigned char data[5] = {0,0,0,0,0};
+    int data[5] = {0,0,0,0,0};
     unsigned char checksum;
     float temperature;
     float humidity;
@@ -79,8 +79,8 @@ sensor_result get_dht22_data(int PIN) {
     // Checksum
     checksum = data[0] + data[1] + data[2] + data[3];
     if (checksum == data[4]) {
-        humidity = data[0]*0.1 + data[1]; // 濕度解析
-        temperature = data[2] + data[3] * 0.1; // 溫度解析
+        humidity = (float)(data[0]<< 8 + data[1])*0.1; // 濕度解析
+        temperature = (float)((data[2] & 0x7F) << 8 + data[3]) * 0.1; // 溫度解析
     } else {
         printf("Checksum error\n");
         result.get_status = 3;
