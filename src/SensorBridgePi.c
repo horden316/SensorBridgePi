@@ -26,7 +26,7 @@ void* sensor_thread_func(void* arg) {
                 result = get_dht11_data(TEMPERATURE_HUMIDITY_PIN);
             } else if (strcmp(config.temperature_humidity_sensor, "DHT22") == 0) {
                 result = get_dht22_data(TEMPERATURE_HUMIDITY_PIN);
-            else {
+            }else {
                 printf("Unknown sensor type\n");
                 exit(EXIT_FAILURE);
             }
