@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sensor_dht11.h"
+#include "sensor_dht22.h"
 #include "sensor_sht3x.h"
 #include "mqtt_connection.h"
 #include "config.h"
