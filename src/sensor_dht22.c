@@ -79,7 +79,7 @@ sensor_result get_dht22_data(int PIN) {
     // Checksum
     checksum = data[0] + data[1] + data[2] + data[3];
     if (checksum == data[4]) {
-        humidity = data[0] + data[1] * 0.1; // 濕度解析
+        humidity = data[0]*0.1 + data[1]; // 濕度解析
         temperature = data[2] + data[3] * 0.1; // 溫度解析
     } else {
         printf("Checksum error\n");
