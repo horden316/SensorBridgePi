@@ -18,9 +18,9 @@ sensor_result get_dht22_data(int PIN) {
     pinMode(PIN, OUTPUT);  //SET OUTPUT
 
     digitalWrite(PIN, LOW);
-    delay(10); // DHT22要求至少拉低1ms
+    delay(20); // DHT22要求至少拉低1ms
     digitalWrite(PIN, HIGH);
-    delayMicroseconds(30); // 拉高20~40us
+    delayMicroseconds(35); // 拉高20~40us
 
 
     // DHT22 response
