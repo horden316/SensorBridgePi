@@ -24,7 +24,9 @@ void* sensor_thread_func(void* arg) {
                 result = get_sht3x_data("/dev/i2c-3", addr);
             } else if (strcmp(config.temperature_humidity_sensor, "DHT11") == 0) {
                 result = get_dht11_data(TEMPERATURE_HUMIDITY_PIN);
-            } else {
+            } else if (strcmp(config.temperature_humidity_sensor, "DHT22") == 0) {
+                result = get_dht22_data(TEMPERATURE_HUMIDITY_PIN);
+            else {
                 printf("Unknown sensor type\n");
                 exit(EXIT_FAILURE);
             }
